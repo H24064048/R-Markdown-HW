@@ -1,0 +1,217 @@
+---
+title: "R Markdown Practice using R programming plots."
+author: "Geng-Yu  Li"
+output: html_document
+---
+
+<div style="margin-bottom:30px;"></div>
+
+> <font size="4">Inference: https://www.amazon.com/First-Course-Statistical-Programming/dp/0521694248</font>    
+> <font size="4">Statement: All examples of the plots are based on the books. So to get full information, please read the book: A First Course in Statistical Programming with R by W.John Braun (Author), Duncan J. Murdoch.</font>
+
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+<div style="margin-bottom:30px;"></div>
+---------------------------------------------------------------------------------------------------------------------------
+
+## Table of Contents
+  * [<font size="5"><span style="color:#EE4982;"><b>Basics About R Language</b></span></font>][Basics About R Language]   
+  * <font size="5"><span style="color:#F4C04C;"><b>Plots:</b></span></font>  
+      _click to jump to the part_      
+      + [<font size="4"><span style="color:#13BF7B;">Bar charts and dot charts</span></font>][Bar chart and Dot chart]
+      + [<font size="4"><span style="color:#13BF7B;">Pie charts</span></font>][Pie chart]      
+      + [<font size="4"><span style="color:#13BF7B;">Histograms</span></font>][Histogram]      
+      + [<font size="4"><span style="color:#13BF7B;">Box plots</span></font>][Box plot]      
+      + [<font size="4"><span style="color:#13BF7B;">Scatterplots</span></font>][Scatterplot]      
+      + [<font size="4"><span style="color:#13BF7B;">QQ plots</span></font>][QQ plot]  
+      
+
+
+--------------------------------------------------------------------------------------------------------------------------
+
+## Basics About R Language    
+<div style="margin-bottom:30px;"></div>
+
+<font size="5"><span style="color:#3E72B6;">1. How to make assignments?</span></font>
+
+<div style="margin-bottom:20px;"></div>
+<font size="4">
+  (a.) a less than sign "<" with a hyphen "-" 指向(我習慣使用這種)  
+  (b.) equals sign "=" (僅適用大部分情況)  
+</font>
+```{r}
+initial.balance <- 3000
+interest.30 <- 1.0025^30
+final.balance <- initial.balance * interest.30
+final.balance
+```
+
+<div style="margin-bottom:30px;"></div>
+
+<font size="5"><span style="color:#3E72B6;">2. R 對於大小寫判斷為不同字母</span></font>
+
+<div style="margin-bottom:30px;"></div>
+
+<font size="5"><span style="color:#3E72B6;">3. 查詢 Workspace 中暫存的物件(Objects)</span></font>
+    
+<font size="4"> Using the function: </font>
+```{r,eval=FALSE}
+objects()
+```
+<font size="4">or</font>
+```{r,eval=FALSE}
+ls()
+```
+
+<div style="margin-bottom:30px;"></div>
+
+<font size="5"><span style="color:#3E72B6;">4. Vectors</span></font>
+<div style="margin-bottom:15px;"></div>
+
+<font size="4">
+  The function c() collects elements into a vector.  
+
+  For example:    
+    
+</font>
+
+```{r,eval=FALSE}
+c(0, 7, 8)
+```
+<div style="margin-bottom:15px;"></div>
+<font size="4"> Another example: </font>
+```{r}
+numbers10to20 <- 10:20
+some.numbers <- c(2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 59, 67, 71, 73, 79, 83, 89, 97, 103, 107, 109, 113, 119)
+numbers <- c(some.numbers, numbers10to20, 9:1)
+numbers
+```
+
+<div style="margin-bottom:30px;"></div>
+<font size="5"><span style="color:#3E72B6;">Extracing elements from  vectors</span></font>
+<div style="margin-bottom:10px;"></div>
+
+<font size="4">1. 取出第22個:  </font>
+```{r}
+numbers[22]
+```
+<div style="margin-bottom:20px;"></div>
+
+<font size="4">
+  2. 取出第3,6,7個:     
+  中括號可填入向量
+</font>
+<div style="margin-bottom:20px;"></div>
+```{r}
+numbers[c(3,6,7)]
+```
+<div style="margin-bottom:20px;"></div>
+
+<font size="4">3. 取出全部除了第五個:  </font>
+```{r}
+numbers[-5]
+```
+<div style="margin-bottom:20px;"></div>
+
+
+<font size="5"><span style="color:#3E72B6;">5. Data Frames</span></font>
+<div style="margin-bottom:10px;"></div>
+
+<font size="4">
+Data Frames are like matrices,but with the columns having their own names.  
+Columns can be of different types from each other.  
+</font>
+
+<div style="margin-bottom:20px;"></div>
+```{r}
+colors <- c("red", "yellow", "blue")
+numbers <- c(1, 2, 3)
+colors.and.numbers <- data.frame(colors, numbers,more.numbers=c(4, 5, 6))
+
+colors.and.numbers
+```
+
+--------------------------------------------------------------------------------------------------------------------------
+## Bar chart and Dot chart 
+
+```{r}
+barplot(VADeaths, beside=TRUE, legend=TRUE, ylim=c(0, 90),
+        ylab="Deaths per 1000",
+        main="Death rates in Virginia")
+```
+
+
+```{r}
+dotchart(VADeaths, xlim=c(0, 75),
+         xlab="Deaths per 1000",
+         main="Death rates in Virginia")
+```
+
+
+
+
+  
+
+## Pie chart   
+
+```{r}
+groupsizes <- c(25, 21, 35, 23, 46)
+labels <- c("甲", "乙", "丙", "丁", "戊")
+pie(groupsizes, labels, col=c("white", "grey40", "black", "grey", "grey90"))
+```
+
+
+
+
+
+## Histogram
+
+```{r}
+x <- rnorm(10000)
+hist(x)
+```
+
+
+
+## Box plot
+
+```{r}
+boxplot(Sepal.Length ~ Species, data = iris,
+        ylab = "Sepal length (cm)", main = "Iris measurements",
+        boxwex = 0.5)
+```
+
+
+
+
+## Scatterplot
+
+```{r}
+x <- rnorm(100) # assigns 100 random normal observations to x
+y <- rpois(100, 30)
+plot(x, y, main = "Poisson versus Normal")
+
+plot(sort(x), sort(y), type="l") # a plot of the sample "quantiles"
+```
+
+
+
+## QQ plot
+
+```{r}
+X <- rnorm(1000)
+A <- rnorm(1000)
+qqplot(X, A, main="A and X are the same")
+B <- rnorm(1000, mean=3, sd=2)
+qqplot(X, B, main="B is rescaled X")
+C <- rt(1000, df=2)
+qqplot(X, C, main="C has heavier tails")
+D <- exp(rnorm(1000))
+qqplot(X, D, main="D is skewed to the right")
+```
+
